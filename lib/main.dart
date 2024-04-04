@@ -1,66 +1,66 @@
 import 'package:flutter/material.dart';
 
-void main() {
+void main (){
   runApp(MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text('Homework'),
-        backgroundColor: Colors.blue,
-      ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconWithLabel(
-              icon: Icons.phone,
-              label: 'Phone',
-              color: Colors.blue,
-            ),
-            IconWithLabel(
-              icon: Icons.router,
-              label: 'Route',
-              color: Colors.blue,
-              ),
-              IconWithLabel(
-              icon: Icons.share,
-              label: 'Share',
-              color: Colors.blue,
-            ),
-          ],
-        ),
-      ),
+    home:SafeArea(
+      child:Scaffold(
+        body: Center(child: MyWidget2(false)),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.red,
+        //   title: const Text('Tu hoc Flutter'),
+        //
+        // ),
+        // body: const Center(
+        //   child: Text('Hello world'),
+        //
+        // )
+      )
     ),
-      debugShowCheckedModeBanner:false,
+    debugShowCheckedModeBanner:false ,
   ));
 }
 
-class IconWithLabel extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Color color;
+class MyWidget extends StatelessWidget{
+  final bool loading;
 
-  const IconWithLabel({
-    Key? key,
-    required this.icon,
-    required this.label,
-    required this.color,
-  }) : super(key: key);
+  MyWidget(this.loading);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          size: 50,
-          color: color,
-        ),
-        SizedBox(height: 10),
-        Text(
-          label,
-          style: TextStyle(fontSize: 18, color: color),
-        ),
-      ],
-    );
+    return loading ? CircularProgressIndicator() : const Text('State');
+
+  }
+
+}
+
+class MyWidget2 extends StatefulWidget{
+  final bool loading;
+
+
+  MyWidget2(this.loading);
+
+  @override
+  State<StatefulWidget> createState() {
+    return MyWidget2State();
+
+  }
+
+}
+
+class MyWidget2State extends State<MyWidget2> {
+  late bool _localloading;
+
+  @override
+  void initState() {
+    _localloading= widget.loading;
+
+  }
+  Widget build(BuildContext context) {
+    return _localloading ? CircularProgressIndicator() : FloatingActionButton(onPressed: onClickButton);
+  }
+  void onClickButton(){
+    setState(() {
+      _localloading = true;
+    });
   }
 }
